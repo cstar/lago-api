@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package events.v1;
+
+import "google/protobuf/empty.proto";
+
+service IngestorService {
+  rpc Record(stream Event) returns (google.protobuf.Empty) {}
+}
+
+message Event {
+  string transaction_id = 1;
+  string external_subscription_id = 3;
+  string code = 4;
+  int32 timestamp = 5;
+  map<string, string> properties = 6;
+}

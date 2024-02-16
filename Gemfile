@@ -73,6 +73,9 @@ gem 'slim-rails'
 # Kafka
 gem 'karafka'
 
+# gRPC
+gem 'grpc'
+
 # Taxes
 gem 'valvat', require: false
 
@@ -103,6 +106,7 @@ group :development do
   gem 'bullet'
   gem 'coffee-rails'
   gem 'graphiql-rails', git: 'https://github.com/rmosolgo/graphiql-rails.git'
+  gem 'grpc-tools'
 
   gem 'rubocop-graphql', require: false
   gem 'rubocop-performance', require: false
