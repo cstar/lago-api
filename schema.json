@@ -17285,24 +17285,6 @@
               ]
             },
             {
-              "name": "permissions",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Permissions",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null,
-              "args": [
-
-              ]
-            },
-            {
               "name": "revokedAt",
               "description": null,
               "type": {
@@ -20867,6 +20849,24 @@
               ]
             },
             {
+              "name": "permissions",
+              "description": null,
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Permissions",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null,
+              "args": [
+
+              ]
+            },
+            {
               "name": "premiumIntegrations",
               "description": null,
               "type": {
@@ -21354,7 +21354,7 @@
           "possibleTypes": null,
           "fields": [
             {
-              "name": "addons:create",
+              "name": "addonsCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21372,7 +21372,7 @@
               ]
             },
             {
-              "name": "addons:delete",
+              "name": "addonsDelete",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21390,7 +21390,7 @@
               ]
             },
             {
-              "name": "addons:update",
+              "name": "addonsUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21408,7 +21408,7 @@
               ]
             },
             {
-              "name": "addons:view",
+              "name": "addonsView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21426,7 +21426,7 @@
               ]
             },
             {
-              "name": "analytics:view",
+              "name": "analyticsView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21444,7 +21444,7 @@
               ]
             },
             {
-              "name": "billableMetrics:create",
+              "name": "billableMetricsCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21462,7 +21462,7 @@
               ]
             },
             {
-              "name": "billableMetrics:delete",
+              "name": "billableMetricsDelete",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21480,7 +21480,7 @@
               ]
             },
             {
-              "name": "billableMetrics:update",
+              "name": "billableMetricsUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21498,7 +21498,7 @@
               ]
             },
             {
-              "name": "billableMetrics:view",
+              "name": "billableMetricsView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21516,7 +21516,7 @@
               ]
             },
             {
-              "name": "coupons:attach",
+              "name": "couponsAttach",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21534,7 +21534,7 @@
               ]
             },
             {
-              "name": "coupons:create",
+              "name": "couponsCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21552,7 +21552,7 @@
               ]
             },
             {
-              "name": "coupons:delete",
+              "name": "couponsDelete",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21570,7 +21570,7 @@
               ]
             },
             {
-              "name": "coupons:detach",
+              "name": "couponsDetach",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21588,7 +21588,7 @@
               ]
             },
             {
-              "name": "coupons:update",
+              "name": "couponsUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21606,7 +21606,7 @@
               ]
             },
             {
-              "name": "coupons:view",
+              "name": "couponsView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21624,7 +21624,7 @@
               ]
             },
             {
-              "name": "creditNotes:create",
+              "name": "creditNotesCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21642,7 +21642,7 @@
               ]
             },
             {
-              "name": "creditNotes:view",
+              "name": "creditNotesView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21660,7 +21660,7 @@
               ]
             },
             {
-              "name": "creditNotes:void",
+              "name": "creditNotesVoid",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21678,7 +21678,7 @@
               ]
             },
             {
-              "name": "customerSettings:edit:gracePeriod",
+              "name": "customerSettingsEditGracePeriod",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21696,7 +21696,7 @@
               ]
             },
             {
-              "name": "customerSettings:edit:lang",
+              "name": "customerSettingsEditLang",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21714,7 +21714,7 @@
               ]
             },
             {
-              "name": "customerSettings:edit:paymentTerms",
+              "name": "customerSettingsEditPaymentTerms",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21732,7 +21732,7 @@
               ]
             },
             {
-              "name": "customerSettings:edit:taxRates",
+              "name": "customerSettingsEditTaxRates",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21750,7 +21750,7 @@
               ]
             },
             {
-              "name": "customerSettings:view",
+              "name": "customerSettingsView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21768,7 +21768,7 @@
               ]
             },
             {
-              "name": "customers:create",
+              "name": "customersCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21786,7 +21786,7 @@
               ]
             },
             {
-              "name": "customers:delete",
+              "name": "customersDelete",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21804,7 +21804,7 @@
               ]
             },
             {
-              "name": "customers:update",
+              "name": "customersUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21822,7 +21822,7 @@
               ]
             },
             {
-              "name": "customers:view",
+              "name": "customersView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21840,7 +21840,7 @@
               ]
             },
             {
-              "name": "developers:keys:view",
+              "name": "developersKeysView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21858,7 +21858,7 @@
               ]
             },
             {
-              "name": "developers:view",
+              "name": "developersView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21876,7 +21876,7 @@
               ]
             },
             {
-              "name": "draftInvoices:update",
+              "name": "draftInvoicesUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21894,7 +21894,7 @@
               ]
             },
             {
-              "name": "invoices:create",
+              "name": "invoicesCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21912,7 +21912,7 @@
               ]
             },
             {
-              "name": "invoices:send",
+              "name": "invoicesSend",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21930,7 +21930,7 @@
               ]
             },
             {
-              "name": "invoices:update",
+              "name": "invoicesUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21948,7 +21948,7 @@
               ]
             },
             {
-              "name": "invoices:view",
+              "name": "invoicesView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21966,7 +21966,7 @@
               ]
             },
             {
-              "name": "invoices:void",
+              "name": "invoicesVoid",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -21984,7 +21984,7 @@
               ]
             },
             {
-              "name": "organization:edit",
+              "name": "organizationEdit",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22002,7 +22002,7 @@
               ]
             },
             {
-              "name": "organization:emails:edit",
+              "name": "organizationEmailsEdit",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22020,7 +22020,7 @@
               ]
             },
             {
-              "name": "organization:emails:view",
+              "name": "organizationEmailsView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22038,7 +22038,7 @@
               ]
             },
             {
-              "name": "organization:integrations:create",
+              "name": "organizationIntegrationsCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22056,7 +22056,7 @@
               ]
             },
             {
-              "name": "organization:integrations:delete",
+              "name": "organizationIntegrationsDelete",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22074,7 +22074,7 @@
               ]
             },
             {
-              "name": "organization:integrations:update",
+              "name": "organizationIntegrationsUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22092,7 +22092,7 @@
               ]
             },
             {
-              "name": "organization:integrations:view",
+              "name": "organizationIntegrationsView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22110,7 +22110,7 @@
               ]
             },
             {
-              "name": "organization:invoices:edit",
+              "name": "organizationInvoicesEdit",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22128,7 +22128,7 @@
               ]
             },
             {
-              "name": "organization:invoices:view",
+              "name": "organizationInvoicesView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22146,7 +22146,7 @@
               ]
             },
             {
-              "name": "organization:members:create",
+              "name": "organizationMembersCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22164,7 +22164,7 @@
               ]
             },
             {
-              "name": "organization:members:delete",
+              "name": "organizationMembersDelete",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22182,7 +22182,7 @@
               ]
             },
             {
-              "name": "organization:members:update",
+              "name": "organizationMembersUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22200,7 +22200,7 @@
               ]
             },
             {
-              "name": "organization:members:view",
+              "name": "organizationMembersView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22218,7 +22218,7 @@
               ]
             },
             {
-              "name": "organization:taxes:edit",
+              "name": "organizationTaxesEdit",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22236,7 +22236,7 @@
               ]
             },
             {
-              "name": "organization:taxes:view",
+              "name": "organizationTaxesView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22254,7 +22254,7 @@
               ]
             },
             {
-              "name": "organization:view",
+              "name": "organizationView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22272,7 +22272,7 @@
               ]
             },
             {
-              "name": "plans:create",
+              "name": "plansCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22290,7 +22290,7 @@
               ]
             },
             {
-              "name": "plans:delete",
+              "name": "plansDelete",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22308,7 +22308,7 @@
               ]
             },
             {
-              "name": "plans:update",
+              "name": "plansUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22326,7 +22326,7 @@
               ]
             },
             {
-              "name": "plans:view",
+              "name": "plansView",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22344,7 +22344,7 @@
               ]
             },
             {
-              "name": "subscriptions:create",
+              "name": "subscriptionsCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22362,7 +22362,7 @@
               ]
             },
             {
-              "name": "subscriptions:delete",
+              "name": "subscriptionsDelete",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22380,7 +22380,7 @@
               ]
             },
             {
-              "name": "subscriptions:update",
+              "name": "subscriptionsUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22398,7 +22398,7 @@
               ]
             },
             {
-              "name": "wallets:create",
+              "name": "walletsCreate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22416,7 +22416,7 @@
               ]
             },
             {
-              "name": "wallets:terminate",
+              "name": "walletsTerminate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22434,7 +22434,7 @@
               ]
             },
             {
-              "name": "wallets:topUp",
+              "name": "walletsTopUp",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -22452,7 +22452,7 @@
               ]
             },
             {
-              "name": "wallets:update",
+              "name": "walletsUpdate",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -27017,6 +27017,24 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null,
+              "args": [
+
+              ]
+            },
+            {
+              "name": "permissions",
+              "description": null,
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Permissions",
                   "ofType": null
                 }
               },

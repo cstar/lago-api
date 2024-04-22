@@ -12,6 +12,7 @@ RSpec.describe Resolvers::CurrentUserResolver, type: :graphql do
           premium
           organizations {
             id
+            permissions
           }
         }
       }
