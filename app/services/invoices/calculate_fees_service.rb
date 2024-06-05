@@ -36,9 +36,10 @@ module Invoices
 
           create_subscription_fee(subscription, boundaries) if should_create_subscription_fee?(subscription)
           create_charges_fees(subscription, boundaries) if should_create_charge_fees?(subscription)
-          if should_create_minimum_commitment_true_up_fee?(invoice_subscription)
-            create_minimum_commitment_true_up_fee(invoice_subscription)
-          end
+
+          create_non_invoiceable_fees(subscription, boundaries) if should_create_non_invoiceable_fees?(subscription)
+
+          create_minimum_commitment_true_up_fee(invoice_subscription) if should_create_minimum_commitment_true_up_fee?(invoice_subscription)
         end
 
         invoice.fees_amount_cents = invoice.fees.sum(:amount_cents)
@@ -55,6 +56,7 @@ module Invoices
         invoice.save!
 
         result.invoice = invoice.reload
+        result.non_invoiceable_fees = non_invoiceable_fees
       end
 
       result
@@ -64,7 +66,7 @@ module Invoices
 
     private
 
-    attr_accessor :invoice, :subscriptions, :timestamp, :recurring, :context
+    attr_accessor :invoice, :subscriptions, :timestamp, :recurring, :context, :non_invoiceable_fees
 
     delegate :customer, :currency, to: :invoice
 
@@ -143,6 +145,29 @@ module Invoices
       next_subscription_charges.pluck(:billable_metric_id).include?(charge.billable_metric_id)
     end
 
+    def create_non_invoiceable_fees(subscription, boundaries)
+      return unless charge_boundaries_valid?(boundaries)
+
+      @non_invoiceable_fees = []
+      subscription
+        .plan
+        .charges
+        .includes(:taxes, billable_metric: :organization, filters: {values: :billable_metric_filter})
+        .joins(:billable_metric)
+        .where(invoiceable: false)
+        .where(pay_in_advance: true, billable_metric: {recurring: true})
+        .find_each do |charge|
+        # QUESTION: Should we reuse this condition?
+        # Upgrade/downgrade scenario need to be handled 😫
+        # next if should_not_create_charge_fee?(charge, subscription)
+
+        fee_result = Fees::ChargeService.new(invoice: nil, charge:, subscription:, boundaries:, currency: invoice.total_amount.currency).create
+        fee_result.raise_if_error!
+
+        @non_invoiceable_fees.concat(fee_result.fees) if fee_result.fees
+      end
+    end
+
     def should_create_minimum_commitment_true_up_fee?(invoice_subscription)
       subscription = invoice_subscription.subscription
 
@@ -208,6 +233,14 @@ module Invoices
         subscription.previous_subscription.nil?
 
       true
+    end
+
+    def should_create_non_invoiceable_fees?(subscription)
+      return true if @recurring
+
+      # Question: Any other conditions?
+
+      false
     end
 
     def credit_notes

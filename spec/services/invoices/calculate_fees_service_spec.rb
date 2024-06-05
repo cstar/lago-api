@@ -161,7 +161,7 @@ RSpec.describe Invoices::CalculateFeesService, type: :service do
         end
       end
 
-      context 'when charge is pay_in_arrear and not invoiceable' do
+      context 'when charge is pay_in_arrears and not invoiceable' do
         let(:charge) do
           create(
             :standard_charge,
@@ -179,6 +179,36 @@ RSpec.describe Invoices::CalculateFeesService, type: :service do
 
             expect(invoice.fees.charge_kind.count).to eq(0)
           end
+        end
+      end
+    end
+
+    context 'when charge is pay_in_advance, recurring and not invoiceable' do
+      let(:recurring) { true } # non-invoiceable recurring charge are only created for :subscription_period invoices
+      let(:billable_metric) do
+        create(:billable_metric, aggregation_type: 'unique_count_agg', recurring: true, field_name: 'item_id')
+      end
+      let(:charge) do
+        create(
+          :standard_charge,
+          :pay_in_advance,
+          plan: subscription.plan,
+          charge_model: 'standard',
+          invoiceable: false,
+          billable_metric:
+        )
+      end
+
+      it 'creates a charge fee not attached to the invoice' do
+        result = invoice_service.call
+
+        aggregate_failures do
+          expect(result).to be_success
+
+          pp result
+          expect(result.non_invoiceable_fees.count).to eq(1)
+          expect(result.non_invoiceable_fees.first.invoice_id).to be_nil
+          expect(result.invoice.reload.fees.charge_kind.count).to eq(0)
         end
       end
     end

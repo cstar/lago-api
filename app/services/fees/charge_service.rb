@@ -2,12 +2,14 @@
 
 module Fees
   class ChargeService < BaseService
-    def initialize(invoice:, charge:, subscription:, boundaries:)
+    def initialize(invoice:, charge:, subscription:, boundaries:, currency: nil)
       @invoice = invoice
       @charge = charge
       @subscription = subscription
       @is_current_usage = false
       @boundaries = OpenStruct.new(boundaries)
+      @currency = currency || invoice.total_amount.currency # If invoice is nil, currency arg is required
+
       super(nil)
     end
 
@@ -22,7 +24,7 @@ module Fees
         result.fees.each do |fee|
           fee.save!
 
-          next unless invoice.draft? && fee.true_up_parent_fee.nil? && adjusted_fee(
+          next unless invoice&.draft? && fee.true_up_parent_fee.nil? && adjusted_fee(
             charge_filter: fee.charge_filter,
             grouped_by: fee.grouped_by
           )
@@ -45,9 +47,9 @@ module Fees
 
     private
 
-    attr_accessor :invoice, :charge, :subscription, :boundaries, :is_current_usage
+    attr_accessor :invoice, :charge, :subscription, :boundaries, :is_current_usage, :currency
 
-    delegate :customer, to: :invoice
+    # delegate :customer, to: :invoice
     delegate :billable_metric, to: :charge
     delegate :plan, to: :subscription
 
@@ -77,24 +79,24 @@ module Fees
     def init_fee(amount_result, properties:, charge_filter:)
       # NOTE: Build fee for case when there is adjusted fee and units or amount has been adjusted.
       # Base fee creation flow handles case when only name has been adjusted
-      if invoice.draft? && (adjusted = adjusted_fee(
-        charge_filter:,
-        grouped_by: amount_result.grouped_by
-      )) && !adjusted.adjusted_display_name?
-        adjustement_result = Fees::InitFromAdjustedChargeFeeService.call(
-          adjusted_fee: adjusted,
-          boundaries:,
-          properties:
-        )
-        return result.fail_with_error!(adjustement_result.error) unless adjustement_result.success?
+      if invoice&.draft?
+        adjusted = adjusted_fee(charge_filter:, grouped_by: amount_result.grouped_by)
 
-        result.fees << adjustement_result.fee
-        return
+        if adjusted && !adjusted.adjusted_display_name?
+          adjustment_result = Fees::InitFromAdjustedChargeFeeService.call(
+            adjusted_fee: adjusted,
+            boundaries:,
+            properties:
+          )
+          return result.fail_with_error!(adjustment_result.error) unless adjustment_result.success?
+
+          result.fees << adjustment_result.fee
+          return
+        end
       end
 
       # NOTE: amount_result should be a BigDecimal, we need to round it
       # to the currency decimals and transform it into currency cents
-      currency = invoice.total_amount.currency
       rounded_amount = amount_result.amount.round(currency.exponent)
       amount_cents = rounded_amount * currency.subunit_to_unit
       unit_amount_cents = amount_result.unit_amount * currency.subunit_to_unit
@@ -106,6 +108,7 @@ module Fees
       else
         amount_result.units
       end
+
 
       new_fee = Fee.new(
         invoice:,
@@ -189,8 +192,15 @@ module Fees
     end
 
     def already_billed?
-      existing_fees = invoice.fees.where(charge_id: charge.id, subscription_id: subscription.id)
-      return false if existing_fees.blank?
+      if invoice
+        existing_fees = invoice.fees.where(charge_id: charge.id, subscription_id: subscription.id)
+        return false if existing_fees.blank?
+      else
+        return false
+        # If we're creating an recurring non-invoiceable fee
+        # TODO: How can I check if this is the same fee?
+        # existing_fees = Fee.where(charge_id: charge.id, subscription_id: subscription.id)
+      end
 
       result.fees = existing_fees
       true
