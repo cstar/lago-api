@@ -3918,6 +3918,7 @@ type MappingCollection {
 }
 
 enum MappingTypeEnum {
+  account
   coupon
   credit_note
   fallback_item
