@@ -48,9 +48,9 @@ class Invoice < ApplicationRecord
     allow_nil: true,
     with_model_currency: :currency
 
-  INVOICE_TYPES = %i[subscription add_on credit one_off].freeze
+  INVOICE_TYPES = %i[subscription add_on credit one_off end_of_period_charge].freeze
   PAYMENT_STATUS = %i[pending succeeded failed].freeze
-  STATUS = %i[draft finalized voided generating].freeze
+  STATUS = %i[draft finalized voided generating cool_new_status].freeze
 
   enum invoice_type: INVOICE_TYPES
   enum payment_status: PAYMENT_STATUS
@@ -58,6 +58,7 @@ class Invoice < ApplicationRecord
 
   aasm column: 'status', timestamps: true do
     state :generating
+    state :cool_new_status
     state :draft
     state :finalized
     state :voided

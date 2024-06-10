@@ -106,7 +106,8 @@ module Events
       return unless processable_event
 
       charges.where(invoiceable: false).find_each do |charge|
-        Fees::CreatePayInAdvanceJob.perform_later(charge:, event:)
+        # Fees::CreatePayInAdvanceJob.perform_later(charge:, event:)
+        Invoices::CreateEndOfPeriodChargeService.call(charge:, event:, timestamp: event.timestamp)
       end
 
       charges.where(invoiceable: true).find_each do |charge|

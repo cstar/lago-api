@@ -5,7 +5,7 @@ module Subscriptions
     def call(billing_at: Time.current)
       @today = billing_at
 
-      billable_subscriptions.group_by(&:customer_id).each do |_customer_id, customer_subscriptions|
+      billable_subscriptions.group_by(&:customer_id).each do |customer_id, customer_subscriptions|
         billing_subscriptions = []
         customer_subscriptions.each do |subscription|
           if subscription.next_subscription&.pending?
@@ -22,6 +22,8 @@ module Subscriptions
           billing_at.to_i,
           invoicing_reason: :subscription_periodic
         )
+
+        Invoices::FinalizeCoolNewStatusInvoiceService.call(customer: Customer.find(customer_id), closing_at: billing_at)
       end
     end
 
