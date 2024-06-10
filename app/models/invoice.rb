@@ -94,6 +94,16 @@ class Invoice < ApplicationRecord
         .where('invoices.created_at < ?', invoice.created_at)
     }
 
+  scope :payment_overdue,
+    lambda {
+      where(
+        status: :finalized,
+        payment_status: %w[pending failed],
+        payment_dispute_lost_at: nil,
+        payment_due_date: ...Time.current
+      )
+    }
+
   validates :issuing_date, :currency, presence: true
   validates :timezone, timezone: true, allow_nil: true
   validates :total_amount_cents, numericality: {greater_than_or_equal_to: 0}

@@ -1083,24 +1083,36 @@ RSpec.describe Invoice, type: :model do
     end
   end
 
+  describe ".payment_overdue?" do
+    it "returns payment overdue invoices" do
+      create(:invoice, :draft, payment_due_date: 1.day.from_now)
+      create(:invoice, :succeeded, payment_due_date: 1.day.from_now)
+      create(:invoice, payment_due_date: 1.day.from_now, payment_dispute_lost_at: 1.day.ago)
+      create(:invoice, payment_due_date: nil)
+      overdue_invoice = create(:invoice, payment_due_date: 1.day.ago)
+
+      expect(described_class.payment_overdue).to match_array([overdue_invoice])
+    end
+  end
+
   describe "#payment_overdue?" do
     context "when invoice is draft" do
       it "returns false" do
-        invoice = build(:invoice, :draft, payment_due_date: 1.day.from_now)
+        invoice = build(:invoice, :draft, payment_due_date: 1.day.ago)
         expect(invoice).not_to be_payment_overdue
       end
     end
 
-    context "when invoice is not succeeded" do
+    context "when invoice is succeeded" do
       it "returns false" do
-        invoice = build(:invoice, :pending, payment_due_date: 1.day.from_now)
+        invoice = build(:invoice, :succeeded, payment_due_date: 1.day.ago)
         expect(invoice).not_to be_payment_overdue
       end
     end
 
     context "when invoice is dispute_lost" do
       it "returns false" do
-        invoice = build(:invoice, payment_due_date: 1.day.from_now, payment_dispute_lost_at: 1.day.ago)
+        invoice = build(:invoice, payment_due_date: 1.day.ago, payment_dispute_lost_at: 1.day.ago)
         expect(invoice).not_to be_payment_overdue
       end
     end
