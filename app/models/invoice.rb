@@ -290,6 +290,15 @@ class Invoice < ApplicationRecord
     finalized? && customer.integration_customers.any? { |c| c.integration.sync_sales_orders }
   end
 
+  def payment_overdue?
+    return false if draft?
+    return false if succeeded?
+    return false if payment_dispute_lost_at?
+    return false if payment_due_date.nil?
+
+    payment_due_date < Time.current
+  end
+
   private
 
   def should_assign_sequential_id?

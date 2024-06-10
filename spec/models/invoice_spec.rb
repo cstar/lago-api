@@ -1082,4 +1082,48 @@ RSpec.describe Invoice, type: :model do
       expect(file_url).to include(ENV['LAGO_API_URL'])
     end
   end
+
+  describe "#payment_overdue?" do
+    context "when invoice is draft" do
+      it "returns false" do
+        invoice = build(:invoice, :draft, payment_due_date: 1.day.from_now)
+        expect(invoice).not_to be_payment_overdue
+      end
+    end
+
+    context "when invoice is not succeeded" do
+      it "returns false" do
+        invoice = build(:invoice, :pending, payment_due_date: 1.day.from_now)
+        expect(invoice).not_to be_payment_overdue
+      end
+    end
+
+    context "when invoice is dispute_lost" do
+      it "returns false" do
+        invoice = build(:invoice, payment_due_date: 1.day.from_now, payment_dispute_lost_at: 1.day.ago)
+        expect(invoice).not_to be_payment_overdue
+      end
+    end
+
+    context "when payment_due_date is nil" do
+      it "returns false" do
+        invoice = build(:invoice, payment_due_date: nil)
+        expect(invoice).not_to be_payment_overdue
+      end
+    end
+
+    context "when payment_due_date is in the future" do
+      it "returns false" do
+        invoice = build(:invoice, payment_due_date: 1.day.from_now)
+        expect(invoice).not_to be_payment_overdue
+      end
+    end
+
+    context "when payment_due_date is in the past" do
+      it "returns false" do
+        invoice = build(:invoice, payment_due_date: 1.day.ago)
+        expect(invoice).to be_payment_overdue
+      end
+    end
+  end
 end
